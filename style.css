@@ -30,6 +30,9 @@ ul {
 
 ul > .giorno {
   font-size: 20px;
-  padding: 1px 0;
-  margin: auto;
+  padding: 2px;
+}
+
+.red {
+  background-color: rgb(224, 0, 0);
 }
