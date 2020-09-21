@@ -15,12 +15,10 @@ const ajaxCall = (year, month) => {
 
 				data.response.forEach(e => {
 					var el = e.date.slice(-2);
-					console.log(e.date);
-					$(`ul li:contains(${el})`).addClass("red").append(`<span> - ${e.name}</span>`);
-					// $(`ul li:contains(${el})`).addClass("red");
+
+					$(`ul li:contains(${el})`).addClass("red").append(`<span><br/>${e.name}</span>`);
 
 				});
-
 
 			},
 			error: function (richiesta, stato, errori) {
@@ -35,8 +33,6 @@ const ajaxCall = (year, month) => {
 const render = (year, month, day) => {
 
 	var obj = DateTime.local(year, month, day);
-
-
 
 	$("#year > .anno").text(obj.year);
 	$("#month").attr("data-month", obj.month)
@@ -56,10 +52,7 @@ const render = (year, month, day) => {
 			$(".calendar-container .calendar > ul").append(html);
 			day++;
 		}
-
-
 	}
-
 }
 
 
@@ -69,52 +62,53 @@ $(document).ready(function () {
 
 	render(2018, 1, 1);
 	ajaxCall(2018, 0);
-
+	$(".fa-angle-double-left").addClass("disable");
 
 	$(".arr-left").click(function () {
 		var year = parseInt($(".calendar-container .anno").text(), 10);
 		var month = parseInt($(".calendar-container #month").attr("data-month"), 10);
-		month--;
 
+		// if (month < 1) {
+		// 	year--;
+		// 	month = 12;
+		// }
 
-		if (month < 1) {
-			year--;
-			month = 12;
+		if (month > 1) {
+			month--;
+			render(year, month, 1);
+			ajaxCall(year, --month);
+			$(".fa-angle-double-right").removeClass("disable");
 		}
 
-		// console.log(year);
-		// console.log(month);
+		if (month == 0) {
+			$(".fa-angle-double-left").addClass("disable");
+		}
 
-		render(year, month, 1);
-		ajaxCall(year, --month);
 	});
 
 
 	$(".arr-right").click(function () {
 		var year = parseInt($(".calendar-container .anno").text(), 10);
 		var month = parseInt($(".calendar-container #month").attr("data-month"), 10);
-		month++;
 
+		// if (month > 12) {
+		// 	year++;
+		// 	month = 1;
+		// }
 
-
-		if (month > 12) {
-			year++;
-			month = 1;
+		if (month < 12) {
+			month++;
+			render(year, month, 1);
+			ajaxCall(year, --month);
+			$(".fa-angle-double-left").removeClass("disable");
 		}
 
-		// console.log(year);
-		// console.log(month);
-
-		render(year, month, 1);
-		ajaxCall(year, --month);
-
-		$(".calendar").find("li")
+		if (month == 11) {
+			$(".fa-angle-double-right").addClass("disable");
+		}
 
 	});
 
-
-
-	//ajaxCall();
 
 
 
