@@ -35,9 +35,11 @@ const render = (year, month, day) => {
 	var obj = DateTime.local(year, month, day);
 
 	$("#year > .anno").text(obj.year);
-	$("#month").attr("data-month", obj.month)
+	$("#month").attr("data-month", obj.month);
 	$("#month > .mese").text(obj.monthLong);
 	$(".calendar-container .calendar > ul").html("");
+
+	console.log(obj.day + 1);
 
 	for (let i = 1; i <= obj.daysInMonth; i++) {
 
@@ -46,12 +48,12 @@ const render = (year, month, day) => {
 		if (obj.day <= 9) {
 			let html = `<li class="giorno">0${obj.day} ${obj.weekdayLong}</li>`;
 			$(".calendar-container .calendar > ul").append(html);
-			day++;
 		} else {
 			let html = `<li class="giorno">${obj.day} ${obj.weekdayLong}</li>`;
 			$(".calendar-container .calendar > ul").append(html);
-			day++;
 		}
+
+		day++;
 	}
 }
 
