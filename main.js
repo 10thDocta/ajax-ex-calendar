@@ -16,7 +16,9 @@ const ajaxCall = (year, month) => {
 				data.response.forEach(e => {
 					var el = e.date.slice(-2);
 
-					$(`ul li:contains(${el})`).addClass("red").append(`<span><br/>${e.name}</span>`);
+					// $(`ul li:contains(${el})`).addClass("red").append(`<span><br/>${e.name}</span>`);
+
+					$(`ul li[data-day=${el}]`).addClass("red").append(`<span><br/>${e.name}</span>`);
 
 				});
 
@@ -45,13 +47,10 @@ const render = (year, month, day) => {
 
 		obj = DateTime.local(year, month, day);
 
-		if (obj.day <= 9) {
-			let html = `<li class="giorno">0${obj.day} ${obj.weekdayLong}</li>`;
-			$(".calendar-container .calendar > ul").append(html);
-		} else {
-			let html = `<li class="giorno">${obj.day} ${obj.weekdayLong}</li>`;
-			$(".calendar-container .calendar > ul").append(html);
-		}
+		var giorno = (obj.day < 10 ? "0" : "") + obj.day;
+
+		let html = `<li class="giorno" data-day="${giorno}">${obj.day} ${obj.weekdayLong}</li>`;
+		$(".calendar-container .calendar > ul").append(html);
 
 		day++;
 	}
